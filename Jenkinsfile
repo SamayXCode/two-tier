@@ -6,6 +6,11 @@ pipeline{
                 git url: "https://github.com/SamayXCode/two-tier.git", branch: "main"
             }
         }
+        stage("Trivy File System Scan") {
+    steps {
+        sh "trivy fs --severity HIGH,CRITICAL --exit-code 1 ."
+            }
+        }
         stage("Build"){
             steps{
                 sh "docker build -t flask-app:latest ."
